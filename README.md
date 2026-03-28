@@ -10,18 +10,19 @@ Site simples para compartilhar minha lista de presentes com minha namorada, usan
 2. Crie uma nova planilha
 3. Na **primeira linha**, adicione os seguintes cabeçalhos (exatamente assim):
 
-   | nome | descricao | preco | link |
-   |------|-----------|-------|------|
+    | nome | descricao | preco | link |
+    | ---- | --------- | ----- | ---- |
 
 4. Preencha com os itens que você quer de presente
 
-   **Exemplo:**
-   ```
-   nome: Fone de Ouvido
-   descricao: JBL Tune 520BT, Bluetooth
-   preco: R$ 299,00
-   link: https://amazon.com.br/...
-   ```
+    **Exemplo:**
+
+    ```
+    nome: Fone de Ouvido
+    descricao: JBL Tune 520BT, Bluetooth
+    preco: R$ 299,00
+    link: https://amazon.com.br/...
+    ```
 
 ### Passo 2: Publicar a Planilha
 
@@ -31,48 +32,38 @@ Site simples para compartilhar minha lista de presentes com minha namorada, usan
 4. Clique em **Publicar**
 5. Copie o link gerado
 
-### Passo 3: Pegar o ID da Planilha
-
-O link da planilha tem este formato:
-```
-https://docs.google.com/spreadsheets/d/1ABC123xyz456/edit...
-                                      ^^^^^^^^^^^^^^^^
-                                      ESTE É O ID
-```
-
-Copie apenas o ID (a parte entre `/d/` e `/edit`).
-
-### Passo 4: Configurar o Site
+### Passo 3: Configurar o Site
 
 1. Abra o arquivo `script.js`
-2. Na linha 5, substitua `SEU_ID_DA_PLANILHA_AQUI` pelo ID que você copiou:
+2. Na linha 3, substitua a URL pela que você copiou:
 
-   ```javascript
-   const PLANILHA_ID = '1ABC123xyz456';
-   ```
+    ```javascript
+    const CSV_URL =
+        "https://docs.google.com/spreadsheets/d/e/SEU_LINK_AQUI/pub?gid=0&single=true&output=csv";
+    ```
 
 3. Salve o arquivo
 
-### Passo 5: Publicar no GitHub Pages
+### Passo 4: Publicar no GitHub Pages
 
 1. Crie um repositório no GitHub (pode ser privado ou público)
 2. Faça push dos arquivos para o repositório:
 
-   ```bash
-   git init
-   git add .
-   git commit -m "Primeiro commit - lista de presentes"
-   git branch -M main
-   git remote add origin https://github.com/SEU_USUARIO/lista-presentes.git
-   git push -u origin main
-   ```
+    ```bash
+    git init
+    git add .
+    git commit -m "Primeiro commit - lista de presentes"
+    git branch -M main
+    git remote add origin https://github.com/SEU_USUARIO/lista-presentes.git
+    git push -u origin main
+    ```
 
 3. Vá nas **Settings** do repositório
 4. Clique em **Pages** (no menu lateral)
 5. Em **Source**, escolha `main` e salve
 6. Aguarde alguns minutos e seu site estará no ar!
 
-   URL: `https://SEU_USUARIO.github.io/lista-presentes/`
+    URL: `https://SEU_USUARIO.github.io/lista-presentes/`
 
 ## 📁 Estrutura dos Arquivos
 
