@@ -91,6 +91,7 @@ function renderizarLista(itens) {
         .map(
             (item) => `
     <div class="item">
+      ${item.imagem ? `<img src="${escapeHtml(item.imagem)}" alt="${escapeHtml(item.nome)}" class="item-imagem" onerror="this.style.display='none'">` : ""}
       <div class="item-header">
         <h3 class="item-nome">${escapeHtml(item.nome)}</h3>
         ${item.preco ? `<span class="item-preco">${escapeHtml(item.preco)}</span>` : ""}
