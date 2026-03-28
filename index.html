@@ -1,35 +1,38 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Minha Lista de Presentes</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="container">
-    <header>
-      <h1>🎁 Minha Lista de Presentes</h1>
-      <p class="subtitle">Coisinhas que eu gostaria de ganhar 💝</p>
-    </header>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Minha Lista de Presentes</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <h1>🎁 Minha Lista de Presentes</h1>
+                <p class="subtitle">Coisinhas que eu gostaria de ganhar 💝</p>
+            </header>
 
-    <main>
-      <div id="loading" class="loading">
-        <p>Carregando lista...</p>
-      </div>
+            <main>
+                <div id="loading" class="loading">
+                    <p>Carregando lista...</p>
+                </div>
 
-      <div id="error" class="error" style="display: none;">
-        <p>Ops! Não foi possível carregar a lista. Verifique a configuração da planilha.</p>
-      </div>
+                <div id="error" class="error" style="display: none">
+                    <p>
+                        Ops! Não foi possível carregar a lista. Verifique a
+                        configuração da planilha.
+                    </p>
+                </div>
 
-      <div id="lista-presentes" class="lista"></div>
-    </main>
+                <div id="lista-presentes" class="lista"></div>
+            </main>
 
-    <footer>
-      <p>Feito com 💜 para você</p>
-    </footer>
-  </div>
+            <footer>
+                <p>Feito com 💜 para você</p>
+            </footer>
+        </div>
 
-  <script src="script.js"></script>
-</body>
+        <script src="script.js"></script>
+    </body>
 </html>
