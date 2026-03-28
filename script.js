@@ -1,7 +1,16 @@
-// CONFIGURAÇÃO: URL direta da planilha publicada como CSV
-// Substitua pela sua URL completa gerada pelo Google Sheets
-const CSV_URL =
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vRb2HzUZZRSGO354U15R7_jgcK3hl9rh6cFMpzxwWnheFMa43OTKInsYC_Hmn2c1kE39nG_NCP3Q3Cl/pub?gid=0&single=true&output=csv";
+// CONFIGURAÇÃO: URLs das planilhas publicadas como CSV
+// Adicione quantas planilhas quiser aqui
+const PLANILHAS = [
+    {
+        url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRb2HzUZZRSGO354U15R7_jgcK3hl9rh6cFMpzxwWnheFMa43OTKInsYC_Hmn2c1kE39nG_NCP3Q3Cl/pub?gid=0&single=true&output=csv",
+        nome: "Meus Presentes", // Nome que aparece no site
+    },
+    // Adicione mais planilhas aqui:
+    // {
+    //     url: "https://docs.google.com/.../pub?gid=0&single=true&output=csv",
+    //     nome: "Presentes Dela"
+    // }
+];
 
 // Elementos do DOM
 const listaElement = document.getElementById("lista-presentes");
@@ -11,16 +20,25 @@ const errorElement = document.getElementById("error");
 // Função principal para carregar os dados
 async function carregarLista() {
     try {
-        const response = await fetch(CSV_URL);
+        // Carrega todas as planilhas em paralelo
+        const todasPlanilhas = await Promise.all(
+            PLANILHAS.map(async (planilha) => {
+                const response = await fetch(planilha.url);
+                if (!response.ok) {
+                    throw new Error(
+                        `Não foi possível acessar: ${planilha.nome}`,
+                    );
+                }
+                const csvText = await response.text();
+                const itens = parseCSV(csvText);
+                return {
+                    nome: planilha.nome,
+                    itens: itens,
+                };
+            }),
+        );
 
-        if (!response.ok) {
-            throw new Error("Não foi possível acessar a planilha");
-        }
-
-        const csvText = await response.text();
-        const itens = parseCSV(csvText);
-
-        renderizarLista(itens);
+        renderizarLista(todasPlanilhas);
     } catch (error) {
         console.error("Erro ao carregar lista:", error);
         loadingElement.style.display = "none";
@@ -78,27 +96,41 @@ function parseCSVLine(line) {
 }
 
 // Renderiza a lista na tela
-function renderizarLista(itens) {
+function renderizarLista(todasPlanilhas) {
     loadingElement.style.display = "none";
 
-    if (itens.length === 0) {
+    // Filtra planilhas com itens
+    const planilhasComItens = todasPlanilhas.filter((p) => p.itens.length > 0);
+
+    if (planilhasComItens.length === 0) {
         listaElement.innerHTML =
             '<p class="loading">Nenhum item na lista ainda.</p>';
         return;
     }
 
-    listaElement.innerHTML = itens
+    listaElement.innerHTML = planilhasComItens
         .map(
-            (item) => `
-    <div class="item">
-      ${item.imagem ? `<img src="${escapeHtml(item.imagem)}" alt="${escapeHtml(item.descricao)}" class="item-imagem" onerror="this.style.display='none'">` : ""}
-      ${item.descricao ? `<p class="item-descricao">${escapeHtml(item.descricao)}</p>` : ""}
-      <div class="item-footer">
-        ${item.preco ? `<span class="item-preco">${escapeHtml(item.preco)}</span>` : ""}
-        ${item.link ? `<a href="${escapeHtml(item.link)}" target="_blank" rel="noopener noreferrer" class="item-link">Ver produto</a>` : ""}
-      </div>
-    </div>
-  `,
+            (planilha) => `
+        <section class="planilha-secao">
+            <h2 class="planilha-titulo">${escapeHtml(planilha.nome)}</h2>
+            <div class="lista">
+                ${planilha.itens
+                    .map(
+                        (item) => `
+                <div class="item">
+                  ${item.imagem ? `<img src="${escapeHtml(item.imagem)}" alt="${escapeHtml(item.descricao)}" class="item-imagem" onerror="this.style.display='none'">` : ""}
+                  ${item.descricao ? `<p class="item-descricao">${escapeHtml(item.descricao)}</p>` : ""}
+                  <div class="item-footer">
+                    ${item.preco ? `<span class="item-preco">${escapeHtml(item.preco)}</span>` : ""}
+                    ${item.link ? `<a href="${escapeHtml(item.link)}" target="_blank" rel="noopener noreferrer" class="item-link">Ver produto</a>` : ""}
+                  </div>
+                </div>
+              `,
+                    )
+                    .join("")}
+            </div>
+        </section>
+    `,
         )
         .join("");
 }

@@ -1,13 +1,15 @@
 # 🎁 Minha Lista de Presentes
 
-Site simples para compartilhar minha lista de presentes com minha namorada, usando Google Sheets como backend.
+Site simples para compartilhar listas de presentes com quem você quiser, usando Google Sheets como backend.
 
 ## 🚀 Como Configurar
 
-### Passo 1: Criar a Planilha no Google Sheets
+### Passo 1: Criar as Planilhas no Google Sheets
+
+Cada pessoa pode ter sua própria planilha!
 
 1. Acesse [Google Sheets](https://sheets.google.com)
-2. Crie uma nova planilha
+2. Crie uma nova planilha (uma para cada pessoa)
 3. Na **primeira linha**, adicione os seguintes cabeçalhos (exatamente assim):
 
     | descricao | preco | link | imagem |
@@ -26,7 +28,9 @@ Site simples para compartilhar minha lista de presentes com minha namorada, usan
 
     **Dica:** Para pegar o link da imagem, abra o produto no site, clique com o botão direito na imagem e escolha "Copiar endereço da imagem". A coluna `imagem` é opcional.
 
-### Passo 2: Publicar a Planilha
+### Passo 2: Publicar as Planilhas
+
+Para **cada planilha**:
 
 1. No Google Sheets, clique em **Arquivo** > **Compartilhar** > **Publicar na web**
 2. Em "Link", escolha **Toda a planilha**
@@ -37,11 +41,19 @@ Site simples para compartilhar minha lista de presentes com minha namorada, usan
 ### Passo 3: Configurar o Site
 
 1. Abra o arquivo `script.js`
-2. Na linha 3, substitua a URL pela que você copiou:
+2. Nas linhas 3-12, configure as planilhas:
 
     ```javascript
-    const CSV_URL =
-        "https://docs.google.com/spreadsheets/d/e/SEU_LINK_AQUI/pub?gid=0&single=true&output=csv";
+    const PLANILHAS = [
+        {
+            url: "https://docs.google.com/spreadsheets/d/e/SEU_LINK_AQUI/pub?gid=0&single=true&output=csv",
+            nome: "Meus Presentes", // Nome que aparece no site
+        },
+        {
+            url: "https://docs.google.com/spreadsheets/d/e/OUTRO_LINK_AQUI/pub?gid=0&single=true&output=csv",
+            nome: "Presentes Dela", // Nome da outra pessoa
+        },
+    ];
     ```
 
 3. Salve o arquivo
@@ -86,6 +98,31 @@ Sempre que quiser adicionar ou remover itens:
 3. **Pronto!** O site atualiza automaticamente em até 5 minutos
 
 Não precisa mexer no código!
+
+## ➕ Como Adicionar Outra Planilha
+
+Para adicionar a planilha de outra pessoa:
+
+1. Crie a planilha dela no Google Sheets (mesmo formato)
+2. Publique como CSV (Arquivo > Compartilhar > Publicar na web)
+3. Copie o link
+4. No `script.js`, adicione um novo objeto no array `PLANILHAS`:
+
+    ```javascript
+    const PLANILHAS = [
+        {
+            url: "https://docs.google.com/.../pub?gid=0&single=true&output=csv",
+            nome: "Meus Presentes",
+        },
+        {
+            url: "https://docs.google.com/.../pub?gid=0&single=true&output=csv",
+            nome: "Presentes Dela",
+        },
+        // Adicione mais conforme precisar
+    ];
+    ```
+
+5. Faça commit e push: `git add . && git commit -m "add planilha dela" && git push`
 
 ## 🎨 Personalização
 
