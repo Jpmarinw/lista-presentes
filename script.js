@@ -45,8 +45,8 @@ function parseCSV(csvText) {
             item[header.trim().toLowerCase()] = values[index]?.trim() || "";
         });
 
-        // Só adiciona se tiver nome
-        if (item.nome) {
+        // Só adiciona se tiver descrição
+        if (item.descricao) {
             itens.push(item);
         }
     }
@@ -91,13 +91,12 @@ function renderizarLista(itens) {
         .map(
             (item) => `
     <div class="item">
-      ${item.imagem ? `<img src="${escapeHtml(item.imagem)}" alt="${escapeHtml(item.nome)}" class="item-imagem" onerror="this.style.display='none'">` : ""}
-      <div class="item-header">
-        <h3 class="item-nome">${escapeHtml(item.nome)}</h3>
-        ${item.preco ? `<span class="item-preco">${escapeHtml(item.preco)}</span>` : ""}
-      </div>
+      ${item.imagem ? `<img src="${escapeHtml(item.imagem)}" alt="${escapeHtml(item.descricao)}" class="item-imagem" onerror="this.style.display='none'">` : ""}
       ${item.descricao ? `<p class="item-descricao">${escapeHtml(item.descricao)}</p>` : ""}
-      ${item.link ? `<a href="${escapeHtml(item.link)}" target="_blank" rel="noopener noreferrer" class="item-link">Ver produto</a>` : ""}
+      <div class="item-footer">
+        ${item.preco ? `<span class="item-preco">${escapeHtml(item.preco)}</span>` : ""}
+        ${item.link ? `<a href="${escapeHtml(item.link)}" target="_blank" rel="noopener noreferrer" class="item-link">Ver produto</a>` : ""}
+      </div>
     </div>
   `,
         )

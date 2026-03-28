@@ -10,22 +10,21 @@ Site simples para compartilhar minha lista de presentes com minha namorada, usan
 2. Crie uma nova planilha
 3. Na **primeira linha**, adicione os seguintes cabeçalhos (exatamente assim):
 
-    | nome | descricao | preco | link | imagem |
-    | ---- | --------- | ----- | ---- | ------ |
+    | descricao | preco | link | imagem |
+    | --------- | ----- | ---- | ------ |
 
 4. Preencha com os itens que você quer de presente
 
     **Exemplo:**
 
     ```
-    nome: Fone de Ouvido
-    descricao: JBL Tune 520BT, Bluetooth
+    descricao: Fone de Ouvido JBL Tune 520BT - Bluetooth
     preco: R$ 299,00
     link: https://amazon.com.br/...
     imagem: https://m.media-amazon.com/images/I/61u9RZWrRlL._SL1500_.jpg
     ```
 
-    **Dica:** Para pegar o link da imagem, abra o produto no site, clique com o botão direito na imagem e escolha "Copiar endereço da imagem".
+    **Dica:** Para pegar o link da imagem, abra o produto no site, clique com o botão direito na imagem e escolha "Copiar endereço da imagem". A coluna `imagem` é opcional.
 
 ### Passo 2: Publicar a Planilha
 
