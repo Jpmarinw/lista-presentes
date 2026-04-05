@@ -3,13 +3,13 @@
 const PLANILHAS = [
     {
         url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRb2HzUZZRSGO354U15R7_jgcK3hl9rh6cFMpzxwWnheFMa43OTKInsYC_Hmn2c1kE39nG_NCP3Q3Cl/pub?gid=0&single=true&output=csv",
-        nome: "Meus Presentes", // Nome que aparece no site
+        nome: "Presentes João Pedro", // Nome que aparece no site
     },
     // Adicione mais planilhas aqui:
-    // {
-    //     url: "https://docs.google.com/.../pub?gid=0&single=true&output=csv",
-    //     nome: "Presentes Dela"
-    // }
+    {
+        url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSjJEkiR_39Ec1vCe2SsL8MFhN3wFmlI4T-zIq2NxNBZ_EdvusdldVPFoD35IoQyhzrIJBRvce7c_Js/pub?output=csv",
+        nome: "Presentes Juliane",
+    },
 ];
 
 // Elementos do DOM
