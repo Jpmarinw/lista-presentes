@@ -16,6 +16,12 @@ const PLANILHAS = [
 const listaElement = document.getElementById("lista-presentes");
 const loadingElement = document.getElementById("loading");
 const errorElement = document.getElementById("error");
+const tabsContainer = document.getElementById("tabs-container");
+const tabsHeader = document.getElementById("tabs-header");
+
+// Estado das abas
+let abaAtiva = 0;
+let planilhasCarregadas = [];
 
 // Função principal para carregar os dados
 async function carregarLista() {
@@ -108,9 +114,40 @@ function renderizarLista(todasPlanilhas) {
         return;
     }
 
-    listaElement.innerHTML = planilhasComItens
+    planilhasCarregadas = planilhasComItens;
+
+    // Se tiver mais de uma planilha, mostra as abas
+    if (planilhasComItens.length > 1) {
+        renderizarAbas(planilhasComItens);
+        tabsContainer.style.display = "block";
+    }
+
+    renderizarConteudoAba(0);
+}
+
+// Renderiza o cabeçalho das abas
+function renderizarAbas(planilhas) {
+    tabsHeader.innerHTML = planilhas
         .map(
-            (planilha) => `
+            (planilha, index) => `
+        <button 
+            class="tab-button ${index === 0 ? "active" : ""}" 
+            data-index="${index}"
+            onclick="trocarAba(${index})"
+        >
+            ${escapeHtml(planilha.nome)}
+        </button>
+    `,
+        )
+        .join("");
+}
+
+// Renderiza o conteúdo da aba selecionada
+function renderizarConteudoAba(index) {
+    abaAtiva = index;
+    const planilha = planilhasCarregadas[index];
+
+    listaElement.innerHTML = `
         <section class="planilha-secao">
             <h2 class="planilha-titulo">${escapeHtml(planilha.nome)}</h2>
             <div class="lista">
@@ -130,9 +167,22 @@ function renderizarLista(todasPlanilhas) {
                     .join("")}
             </div>
         </section>
-    `,
-        )
-        .join("");
+    `;
+
+    // Atualiza as classes das abas
+    const botoes = tabsHeader.querySelectorAll(".tab-button");
+    botoes.forEach((botao, i) => {
+        if (i === index) {
+            botao.classList.add("active");
+        } else {
+            botao.classList.remove("active");
+        }
+    });
+}
+
+// Troca a aba ativa
+function trocarAba(index) {
+    renderizarConteudoAba(index);
 }
 
 // Escape HTML para prevenir XSS
