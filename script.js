@@ -25,37 +25,54 @@ let planilhasCarregadas = [];
 
 // Função principal para carregar os dados
 async function carregarLista() {
-    try {
-        // Carrega todas as planilhas em paralelo
-        const todasPlanilhas = await Promise.all(
-            PLANILHAS.map(async (planilha) => {
-                const response = await fetch(planilha.url);
-                if (!response.ok) {
-                    throw new Error(
-                        `Não foi possível acessar: ${planilha.nome}`,
-                    );
-                }
-                const csvText = await response.text();
-                const itens = parseCSV(csvText);
-                return {
-                    nome: planilha.nome,
-                    itens: itens,
-                };
-            }),
-        );
+    const resultados = await Promise.allSettled(
+        PLANILHAS.map(carregarPlanilha),
+    );
+    const planilhas = [];
+    const falhas = [];
 
-        renderizarLista(todasPlanilhas);
-    } catch (error) {
-        console.error("Erro ao carregar lista:", error);
-        loadingElement.style.display = "none";
-        errorElement.style.display = "block";
+    resultados.forEach((resultado, index) => {
+        if (resultado.status === "fulfilled") {
+            planilhas.push(resultado.value);
+        } else {
+            falhas.push(PLANILHAS[index].nome);
+            console.error("Erro ao carregar lista:", resultado.reason);
+        }
+    });
+
+    if (falhas.length > 0) {
+        mostrarErro(`Não foi possível carregar: ${falhas.join(", ")}.`);
     }
+
+    renderizarLista(planilhas);
+}
+
+async function carregarPlanilha(planilha) {
+    const response = await fetch(planilha.url);
+    if (!response.ok) {
+        throw new Error(`Não foi possível acessar: ${planilha.nome}`);
+    }
+
+    const csvText = await response.text();
+    const itens = parseCSV(csvText);
+
+    return {
+        nome: planilha.nome,
+        itens,
+    };
 }
 
 // Parser simples de CSV
 function parseCSV(csvText) {
     const lines = csvText.split("\n").filter((line) => line.trim());
-    const headers = parseCSVLine(lines[0]);
+    if (lines.length === 0) return [];
+
+    const headers = parseCSVLine(lines[0]).map((header) =>
+        header
+            .replace(/^\uFEFF/, "")
+            .trim()
+            .toLowerCase(),
+    );
 
     const itens = [];
 
@@ -66,7 +83,7 @@ function parseCSV(csvText) {
 
         const item = {};
         headers.forEach((header, index) => {
-            item[header.trim().toLowerCase()] = values[index]?.trim() || "";
+            item[header] = values[index]?.trim() || "";
         });
 
         // Só adiciona se tiver descrição
@@ -78,7 +95,7 @@ function parseCSV(csvText) {
     return itens;
 }
 
-// Parser de linha CSV (lida com vírgulas dentro de aspas)
+// Parser de linha CSV (lida com vírgulas e aspas escapadas)
 function parseCSVLine(line) {
     const result = [];
     let current = "";
@@ -87,7 +104,10 @@ function parseCSVLine(line) {
     for (let i = 0; i < line.length; i++) {
         const char = line[i];
 
-        if (char === '"') {
+        if (char === '"' && inQuotes && line[i + 1] === '"') {
+            current += '"';
+            i++;
+        } else if (char === '"') {
             inQuotes = !inQuotes;
         } else if (char === "," && !inQuotes) {
             result.push(current);
@@ -103,12 +123,14 @@ function parseCSVLine(line) {
 
 // Renderiza a lista na tela
 function renderizarLista(todasPlanilhas) {
-    loadingElement.style.display = "none";
+    loadingElement.classList.add("hidden");
 
     // Filtra planilhas com itens
     const planilhasComItens = todasPlanilhas.filter((p) => p.itens.length > 0);
 
     if (planilhasComItens.length === 0) {
+        if (!errorElement.classList.contains("hidden")) return;
+
         listaElement.innerHTML =
             '<p class="loading">Nenhum item na lista ainda.</p>';
         return;
@@ -119,7 +141,9 @@ function renderizarLista(todasPlanilhas) {
     // Se tiver mais de uma planilha, mostra as abas
     if (planilhasComItens.length > 1) {
         renderizarAbas(planilhasComItens);
-        tabsContainer.style.display = "block";
+        tabsContainer.hidden = false;
+    } else {
+        tabsContainer.hidden = true;
     }
 
     renderizarConteudoAba(0);
@@ -130,40 +154,61 @@ function renderizarAbas(planilhas) {
     tabsHeader.innerHTML = planilhas
         .map(
             (planilha, index) => `
-        <button 
-            class="tab-button ${index === 0 ? "active" : ""}" 
+        <button
+            class="tab-button ${index === 0 ? "active" : ""}"
             data-index="${index}"
-            onclick="trocarAba(${index})"
+            id="tab-${index}"
+            role="tab"
+            aria-selected="${index === 0}"
+            aria-controls="panel-${index}"
+            tabindex="${index === 0 ? "0" : "-1"}"
+            type="button"
         >
             ${escapeHtml(planilha.nome)}
         </button>
     `,
         )
         .join("");
+
+    tabsHeader.querySelectorAll(".tab-button").forEach((botao) => {
+        botao.addEventListener("click", () => {
+            renderizarConteudoAba(Number(botao.dataset.index));
+        });
+    });
 }
 
 // Renderiza o conteúdo da aba selecionada
 function renderizarConteudoAba(index) {
+    if (!planilhasCarregadas[index]) return;
+
     abaAtiva = index;
     const planilha = planilhasCarregadas[index];
 
     listaElement.innerHTML = `
-        <section class="planilha-secao">
+        <section
+            class="planilha-secao"
+            id="panel-${index}"
+            role="tabpanel"
+            aria-labelledby="tab-${index}"
+        >
             <h2 class="planilha-titulo">${escapeHtml(planilha.nome)}</h2>
             <div class="lista">
                 ${planilha.itens
-                    .map(
-                        (item) => `
+                    .map((item) => {
+                        const imagem = normalizarUrl(item.imagem);
+                        const link = normalizarUrl(item.link);
+
+                        return `
                 <div class="item">
-                  ${item.imagem ? `<img src="${escapeHtml(item.imagem)}" alt="${escapeHtml(item.descricao)}" class="item-imagem" onerror="this.style.display='none'">` : ""}
+                  ${imagem ? `<img src="${escapeHtml(imagem)}" alt="${escapeHtml(item.descricao)}" class="item-imagem" loading="lazy" onerror="this.hidden=true">` : ""}
                   ${item.descricao ? `<p class="item-descricao">${escapeHtml(item.descricao)}</p>` : ""}
                   <div class="item-footer">
                     ${item.preco ? `<span class="item-preco">${escapeHtml(item.preco)}</span>` : ""}
-                    ${item.link ? `<a href="${escapeHtml(item.link)}" target="_blank" rel="noopener noreferrer" class="item-link">Ver produto</a>` : ""}
+                    ${link ? `<a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer" class="item-link">Ver produto</a>` : ""}
                   </div>
                 </div>
-              `,
-                    )
+              `;
+                    })
                     .join("")}
             </div>
         </section>
@@ -174,15 +219,32 @@ function renderizarConteudoAba(index) {
     botoes.forEach((botao, i) => {
         if (i === index) {
             botao.classList.add("active");
+            botao.setAttribute("aria-selected", "true");
+            botao.tabIndex = 0;
         } else {
             botao.classList.remove("active");
+            botao.setAttribute("aria-selected", "false");
+            botao.tabIndex = -1;
         }
     });
 }
 
-// Troca a aba ativa
-function trocarAba(index) {
-    renderizarConteudoAba(index);
+function mostrarErro(mensagem) {
+    errorElement.classList.remove("hidden");
+    errorElement.querySelector("p").textContent = mensagem;
+}
+
+function normalizarUrl(url) {
+    if (!url) return "";
+
+    try {
+        const urlNormalizada = new URL(url);
+        return ["http:", "https:"].includes(urlNormalizada.protocol)
+            ? urlNormalizada.href
+            : "";
+    } catch {
+        return "";
+    }
 }
 
 // Escape HTML para prevenir XSS
@@ -191,6 +253,30 @@ function escapeHtml(text) {
     div.textContent = text;
     return div.innerHTML;
 }
+
+tabsHeader.addEventListener("keydown", (event) => {
+    const teclas = ["ArrowLeft", "ArrowRight", "Home", "End"];
+    if (!teclas.includes(event.key)) return;
+
+    event.preventDefault();
+
+    const ultimoIndice = planilhasCarregadas.length - 1;
+    let proximoIndice = abaAtiva;
+
+    if (event.key === "ArrowRight") {
+        proximoIndice = abaAtiva === ultimoIndice ? 0 : abaAtiva + 1;
+    }
+
+    if (event.key === "ArrowLeft") {
+        proximoIndice = abaAtiva === 0 ? ultimoIndice : abaAtiva - 1;
+    }
+
+    if (event.key === "Home") proximoIndice = 0;
+    if (event.key === "End") proximoIndice = ultimoIndice;
+
+    renderizarConteudoAba(proximoIndice);
+    tabsHeader.querySelector(`[data-index="${proximoIndice}"]`)?.focus();
+});
 
 // Inicializa quando a página carregar
 document.addEventListener("DOMContentLoaded", carregarLista);

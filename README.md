@@ -19,7 +19,7 @@ Cada pessoa pode ter sua própria planilha!
 
     **Exemplo:**
 
-    ```
+    ```text
     descricao: Fone de Ouvido JBL Tune 520BT - Bluetooth
     preco: R$ 299,00
     link: https://amazon.com.br/...
@@ -41,7 +41,7 @@ Para **cada planilha**:
 ### Passo 3: Configurar o Site
 
 1. Abra o arquivo `script.js`
-2. Nas linhas 3-12, configure as planilhas:
+2. Nas primeiras linhas, configure as planilhas:
 
     ```javascript
     const PLANILHAS = [
@@ -81,7 +81,7 @@ Para **cada planilha**:
 
 ## 📁 Estrutura dos Arquivos
 
-```
+```text
 lista-presentes/
 ├── index.html      # Página principal
 ├── style.css       # Estilos e design

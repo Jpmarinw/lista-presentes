@@ -18,19 +18,20 @@
                     <p>Carregando lista...</p>
                 </div>
 
-                <div id="error" class="error" style="display: none">
+                <div id="error" class="error hidden">
                     <p>
                         Ops! Não foi possível carregar a lista. Verifique a
                         configuração da planilha.
                     </p>
                 </div>
 
-                <div
-                    id="tabs-container"
-                    class="tabs-container"
-                    style="display: none"
-                >
-                    <div id="tabs-header" class="tabs-header"></div>
+                <div id="tabs-container" class="tabs-container" hidden>
+                    <div
+                        id="tabs-header"
+                        class="tabs-header"
+                        role="tablist"
+                        aria-label="Listas de presentes"
+                    ></div>
                 </div>
 
                 <div id="lista-presentes" class="lista"></div>
