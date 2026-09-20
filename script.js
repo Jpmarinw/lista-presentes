@@ -18,10 +18,42 @@ const loadingElement = document.getElementById("loading");
 const errorElement = document.getElementById("error");
 const tabsContainer = document.getElementById("tabs-container");
 const tabsHeader = document.getElementById("tabs-header");
+const themeToggle = document.getElementById("theme-toggle");
+const controlesContainer = document.getElementById("controles-container");
+const sortSelect = document.getElementById("sort-select");
 
-// Estado das abas
+// Tema
+function inicializarTema() {
+    const temaSalvo = localStorage.getItem("tema");
+    const prefereEscuro = window.matchMedia(
+        "(prefers-color-scheme: dark)",
+    ).matches;
+    const tema = temaSalvo || (prefereEscuro ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", tema);
+}
+
+function alternarTema() {
+    const temaAtual = document.documentElement.getAttribute("data-theme");
+    const novoTema = temaAtual === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", novoTema);
+    localStorage.setItem("tema", novoTema);
+}
+
+themeToggle.addEventListener("click", alternarTema);
+inicializarTema();
+
+// Estado da aplicação (abas e ordenação)
 let abaAtiva = 0;
 let planilhasCarregadas = [];
+let ordenacaoAtual = "padrao";
+
+// Listener para alteração da ordenação
+if (sortSelect) {
+    sortSelect.addEventListener("change", (event) => {
+        ordenacaoAtual = event.target.value;
+        renderizarConteudoAba(abaAtiva);
+    });
+}
 
 // Função principal para carregar os dados
 async function carregarLista() {
@@ -129,6 +161,7 @@ function renderizarLista(todasPlanilhas) {
     const planilhasComItens = todasPlanilhas.filter((p) => p.itens.length > 0);
 
     if (planilhasComItens.length === 0) {
+        if (controlesContainer) controlesContainer.hidden = true;
         if (!errorElement.classList.contains("hidden")) return;
 
         listaElement.innerHTML =
@@ -137,6 +170,11 @@ function renderizarLista(todasPlanilhas) {
     }
 
     planilhasCarregadas = planilhasComItens;
+
+    // Exibe o filtro de ordenação
+    if (controlesContainer) {
+        controlesContainer.hidden = false;
+    }
 
     // Se tiver mais de uma planilha, mostra as abas
     if (planilhasComItens.length > 1) {
@@ -183,6 +221,7 @@ function renderizarConteudoAba(index) {
 
     abaAtiva = index;
     const planilha = planilhasCarregadas[index];
+    const itensOrdenados = ordenarItens(planilha.itens, ordenacaoAtual);
 
     listaElement.innerHTML = `
         <section
@@ -193,17 +232,18 @@ function renderizarConteudoAba(index) {
         >
             <h2 class="planilha-titulo">${escapeHtml(planilha.nome)}</h2>
             <div class="lista">
-                ${planilha.itens
+                ${itensOrdenados
                     .map((item) => {
                         const imagem = normalizarUrl(item.imagem);
                         const link = normalizarUrl(item.link);
+                        const preco = formatarPreco(item.preco);
 
                         return `
                 <div class="item">
                   ${imagem ? `<img src="${escapeHtml(imagem)}" alt="${escapeHtml(item.descricao)}" class="item-imagem" loading="lazy" onerror="this.hidden=true">` : ""}
                   ${item.descricao ? `<p class="item-descricao">${escapeHtml(item.descricao)}</p>` : ""}
                   <div class="item-footer">
-                    ${item.preco ? `<span class="item-preco">${escapeHtml(item.preco)}</span>` : ""}
+                    ${preco ? `<span class="item-preco">${escapeHtml(preco)}</span>` : ""}
                     ${link ? `<a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer" class="item-link">Ver produto</a>` : ""}
                   </div>
                 </div>
@@ -252,6 +292,92 @@ function escapeHtml(text) {
     const div = document.createElement("div");
     div.textContent = text;
     return div.innerHTML;
+}
+
+/**
+ * Extrai o valor numérico de uma string de preço (ex: "80", "80,50", "1.250,00", "R$ 80").
+ * Retorna null se não for possível converter para um número válido.
+ */
+function extrairValorNumerico(preco) {
+    if (!preco || typeof preco !== "string") return null;
+    const textoLimpo = preco.trim();
+    if (!textoLimpo) return null;
+
+    // Remove prefixos como 'R$', '$' e espaços extras no início
+    let valor = textoLimpo.replace(/^(r\$|\$)\s*/i, "").trim();
+
+    // Normaliza separadores decimais e de milhar
+    if (valor.includes(".") && valor.includes(",")) {
+        if (valor.indexOf(".") < valor.indexOf(",")) {
+            // Formato brasileiro: 1.250,50 -> remove '.' e substitui ',' por '.'
+            valor = valor.replace(/\./g, "").replace(",", ".");
+        } else {
+            // Formato americano: 1,250.50 -> remove ','
+            valor = valor.replace(/,/g, "");
+        }
+    } else if (valor.includes(",")) {
+        // Formato com vírgula: 80,50 -> substitui ',' por '.'
+        valor = valor.replace(",", ".");
+    } else if (/^\d{1,3}(\.\d{3})+$/.test(valor)) {
+        // Milhar brasileiro sem centavos explícitos: 1.000 ou 10.000 -> remove '.'
+        valor = valor.replace(/\./g, "");
+    }
+
+    const numero = Number(valor);
+    return !isNaN(numero) && isFinite(numero) ? numero : null;
+}
+
+/**
+ * Ordena a lista de itens com base no critério selecionado.
+ * - "padrao": mantém a ordem original da planilha.
+ * - "preco-asc": menor valor para o maior valor (itens sem preço vão para o final).
+ * - "preco-desc": maior valor para o menor valor (itens sem preço vão para o final).
+ */
+function ordenarItens(itens, ordenacao) {
+    if (ordenacao === "padrao") {
+        return [...itens];
+    }
+
+    return [...itens].sort((a, b) => {
+        const valorA = extrairValorNumerico(a.preco);
+        const valorB = extrairValorNumerico(b.preco);
+
+        // Se ambos não têm preço numérico, preserva a ordem relativa original
+        if (valorA === null && valorB === null) return 0;
+        // Itens sem preço ou não numéricos vão para o final
+        if (valorA === null) return 1;
+        if (valorB === null) return -1;
+
+        if (ordenacao === "preco-asc") {
+            return valorA - valorB;
+        } else if (ordenacao === "preco-desc") {
+            return valorB - valorA;
+        }
+        return 0;
+    });
+}
+
+/**
+ * Formata um valor de preço para o padrão monetário brasileiro (R$ XX,XX).
+ * Lida com valores simples ("80" -> "R$ 80,00"), decimais ("80.5" ou "80,5" -> "R$ 80,50"),
+ * valores já com prefixo ("R$ 80" -> "R$ 80,00") e preserva textos informativos ("A combinar").
+ */
+function formatarPreco(preco) {
+    if (!preco || typeof preco !== "string") return "";
+    const textoLimpo = preco.trim();
+    if (!textoLimpo) return "";
+
+    const numero = extrairValorNumerico(textoLimpo);
+
+    // Se não for um valor numérico conversível, mantém o texto original
+    if (numero === null) {
+        return textoLimpo;
+    }
+
+    return numero.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+    });
 }
 
 tabsHeader.addEventListener("keydown", (event) => {
