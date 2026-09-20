@@ -3,27 +3,12 @@
    ========================================================================== */
 :root {
     --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --bg-card: white;
-    --text-primary: #333;
-    --text-secondary: #555;
-    --text-muted: #888;
-    --header-text: white;
-    --tab-bg: rgba(255, 255, 255, 0.2);
-    --tab-border: rgba(255, 255, 255, 0.3);
-    --tab-hover-bg: rgba(255, 255, 255, 0.3);
-    --tab-hover-border: rgba(255, 255, 255, 0.5);
-    --tab-active-bg: white;
-    --tab-active-color: #667eea;
-    --tab-active-border: white;
-    --tab-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
-    --item-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-    --item-hover-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
     --bg-card: #ffffff;
     --text-primary: #2d3748;
     --text-secondary: #4a5568;
     --text-muted: #718096;
     --header-text: #ffffff;
-    
+
     /* Abas / Segmented Control */
     --tabs-nav-bg: rgba(255, 255, 255, 0.22);
     --tab-border: rgba(255, 255, 255, 0.35);
@@ -31,66 +16,34 @@
     --tab-active-bg: #ffffff;
     --tab-active-color: #5a67d8;
     --tab-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-    
+
     /* Cards de presentes */
     --item-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
     --item-hover-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     --img-card-bg: #ffffff;
     --price-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     --link-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --link-hover-opacity: 0.9;
     --link-hover-opacity: 0.92;
     --link-focus-outline: #b3c0ff;
-    --error-bg: rgba(255, 255, 255, 0.1);
-    --footer-opacity: 0.8;
-    --img-bg: #f5f5f5;
-    --toggle-bg: rgba(255, 255, 255, 0.2);
-    --toggle-border: rgba(255, 255, 255, 0.3);
-    --toggle-hover-bg: rgba(255, 255, 255, 0.3);
-    
+
     /* Botão de tema */
     --toggle-bg: rgba(255, 255, 255, 0.25);
     --toggle-border: rgba(255, 255, 255, 0.4);
     --toggle-hover-bg: rgba(255, 255, 255, 0.35);
-    
+
     /* Mensagens e utilitários */
     --error-bg: rgba(255, 255, 255, 0.15);
     --footer-opacity: 0.85;
 }
 
 [data-theme="dark"] {
-    --bg-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    --bg-card: #1f2937;
-    --text-primary: #f3f4f6;
-    --text-secondary: #d1d5db;
-    --text-muted: #9ca3af;
-    --header-text: #f3f4f6;
-    --tab-bg: rgba(31, 41, 55, 0.8);
-    --tab-border: rgba(75, 85, 99, 0.5);
-    --tab-hover-bg: rgba(55, 65, 81, 0.9);
-    --tab-hover-border: rgba(107, 114, 128, 0.7);
-    --tab-active-bg: #3b82f6;
-    --tab-active-color: white;
-    --tab-active-border: #3b82f6;
-    --tab-shadow: 0 5px 20px rgba(59, 130, 246, 0.4);
-    --item-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-    --item-hover-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
-    --price-bg: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-    --link-bg: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-    --link-hover-opacity: 0.9;
-    --link-focus-outline: #93c5fd;
-    --error-bg: rgba(31, 41, 55, 0.9);
-    --footer-opacity: 0.7;
-    --img-bg: #374151;
-    --toggle-bg: rgba(31, 41, 55, 0.8);
-    --toggle-border: rgba(75, 85, 99, 0.5);
     --bg-gradient: linear-gradient(135deg, #13141f 0%, #1a1b2e 100%);
     --bg-card: #1e2235;
     --text-primary: #f7fafc;
     --text-secondary: #cbd5e0;
     --text-muted: #a0aec0;
     --header-text: #f7fafc;
-    
+
     /* Abas / Segmented Control */
     --tabs-nav-bg: rgba(30, 34, 53, 0.75);
     --tab-border: rgba(255, 255, 255, 0.12);
@@ -98,7 +51,7 @@
     --tab-active-bg: #4f46e5;
     --tab-active-color: #ffffff;
     --tab-shadow: 0 4px 15px rgba(79, 70, 229, 0.35);
-    
+
     /* Cards de presentes */
     --item-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
     --item-hover-shadow: 0 12px 35px rgba(0, 0, 0, 0.55);
@@ -107,12 +60,12 @@
     --link-bg: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
     --link-hover-opacity: 0.92;
     --link-focus-outline: #818cf8;
-    
+
     /* Botão de tema */
     --toggle-bg: rgba(30, 34, 53, 0.85);
     --toggle-border: rgba(255, 255, 255, 0.15);
     --toggle-hover-bg: rgba(255, 255, 255, 0.12);
-    
+
     /* Mensagens e utilitários */
     --error-bg: rgba(30, 34, 53, 0.85);
     --footer-opacity: 0.75;
@@ -129,22 +82,20 @@
 }
 
 body {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family:
+        -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+        sans-serif;
     background: var(--bg-gradient);
     min-height: 100vh;
-    padding: 20px;
     padding: 12px 14px 28px;
     color: var(--text-primary);
+    line-height: 1.5;
     transition:
         background 0.3s ease,
         color 0.3s ease;
-    line-height: 1.5;
-    transition: background 0.3s ease, color 0.3s ease;
 }
 
 .hidden {
-    display: none;
     display: none !important;
 }
 
@@ -154,10 +105,6 @@ body {
     margin: 0 auto;
 }
 
-header {
-    text-align: center;
-    color: var(--header-text);
-    margin-bottom: 40px;
 /* ==========================================================================
    CABEÇALHO (MOBILE-FIRST)
    ========================================================================== */
@@ -166,10 +113,6 @@ header {
     position: relative;
 }
 
-header h1 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 /* Barra superior com o botão de tema - evita sobrepor títulos no mobile */
 .header-top {
     display: flex;
@@ -179,46 +122,25 @@ header h1 {
     margin-bottom: 4px;
 }
 
-.subtitle {
-    font-size: 1.2rem;
-    opacity: 0.9;
-}
-
 .theme-toggle {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
     width: 42px;
     height: 42px;
     border-radius: 50%;
     background: var(--toggle-bg);
     border: 2px solid var(--toggle-border);
-    border-radius: 50%;
-    width: 44px;
-    height: 44px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition:
-        background 0.3s ease,
-        border-color 0.3s ease,
-        transform 0.3s ease;
     backdrop-filter: blur(10px);
-    transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
-}
-
-.theme-toggle:hover,
-.theme-toggle:focus-visible {
-    background: var(--toggle-hover-bg);
-    border-color: var(--tab-hover-border);
-    transform: translateY(-50%) scale(1.1);
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
 }
 
 .theme-toggle:focus-visible {
     outline: 3px solid var(--link-focus-outline);
-    outline-offset: 3px;
     outline-offset: 2px;
 }
 
@@ -229,7 +151,6 @@ header h1 {
 
 .theme-toggle .icon-moon {
     display: block;
-    color: #a5b4fc;
     color: #c7d2fe;
 }
 
@@ -241,8 +162,6 @@ header h1 {
     display: none;
 }
 
-.planilha-secao {
-    margin-bottom: 40px;
 .header-title {
     font-size: 1.55rem;
     font-weight: 800;
@@ -253,36 +172,23 @@ header h1 {
     line-height: 1.25;
 }
 
-.planilha-secao:last-child {
-    margin-bottom: 0;
-}
-
-.planilha-titulo {
 .subtitle {
     font-size: 0.95rem;
     text-align: center;
     color: var(--header-text);
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     opacity: 0.92;
 }
 
-/* Estilo das abas */
 /* ==========================================================================
    ABAS / SEGMENTED CONTROL (MOBILE-FIRST)
    ========================================================================== */
 .tabs-container {
-    margin-bottom: 30px;
     margin-bottom: 16px;
     width: 100%;
 }
 
 .tabs-header {
     display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: center;
     gap: 6px;
     background: var(--tabs-nav-bg);
     padding: 5px;
@@ -299,7 +205,6 @@ header h1 {
 }
 
 .tab-button {
-    background: var(--tab-bg);
     flex: 1 1 0;
     min-width: max-content;
     padding: 9px 16px;
@@ -307,86 +212,55 @@ header h1 {
     font-size: 0.88rem;
     font-weight: 600;
     color: var(--header-text);
-    border: 2px solid var(--tab-border);
-    padding: 12px 24px;
-    border-radius: 30px;
-    font-size: 1rem;
-    font-weight: 600;
     background: transparent;
     border: none;
     cursor: pointer;
-    transition:
-        background 0.3s ease,
-        border-color 0.3s ease,
-        box-shadow 0.3s ease,
-        color 0.3s ease,
-        transform 0.3s ease;
-    backdrop-filter: blur(10px);
     white-space: nowrap;
     text-align: center;
-    transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
-.tab-button:hover,
 .tab-button:focus-visible {
-    background: var(--tab-hover-bg);
-    border-color: var(--tab-hover-border);
-    transform: translateY(-2px);
     outline: 2px solid var(--link-focus-outline);
     outline-offset: 1px;
-}
-
-.tab-button:focus-visible {
-    outline: 3px solid var(--link-focus-outline);
-    outline-offset: 3px;
 }
 
 .tab-button.active {
     background: var(--tab-active-bg);
     color: var(--tab-active-color);
-    border-color: var(--tab-active-border);
     box-shadow: var(--tab-shadow);
 }
 
-/* Controles de ordenação */
 /* ==========================================================================
    CONTROLE DE ORDENAÇÃO / FILTRO (MOBILE-FIRST)
    ========================================================================== */
 .controles-container {
     display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-bottom: 24px;
     margin-bottom: 18px;
     width: 100%;
 }
 
 .sort-wrapper {
-    display: inline-flex;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-    background: var(--tab-bg);
-    border: 2px solid var(--tab-border);
-    padding: 6px 14px;
-    border-radius: 20px;
     background: var(--tabs-nav-bg);
     border: 1px solid var(--tab-border);
     padding: 8px 14px;
     border-radius: 14px;
     backdrop-filter: blur(10px);
-    transition:
-        background 0.3s ease,
-        border-color 0.3s ease,
-        box-shadow 0.3s ease;
     min-height: 44px;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .sort-wrapper:focus-within {
-    border-color: var(--tab-hover-border);
     border-color: var(--link-focus-outline);
     box-shadow: 0 0 0 2px var(--link-focus-outline);
 }
@@ -396,7 +270,6 @@ header h1 {
     align-items: center;
     gap: 6px;
     color: var(--header-text);
-    font-size: 0.95rem;
     font-size: 0.88rem;
     font-weight: 600;
     flex-shrink: 0;
@@ -413,14 +286,10 @@ header h1 {
     border: none;
     color: var(--header-text);
     font-family: inherit;
-    font-size: 0.95rem;
     font-size: 0.88rem;
     font-weight: 600;
-    padding: 6px 8px;
     cursor: pointer;
     outline: none;
-    border-radius: 8px;
-    transition: color 0.3s ease;
     text-align: right;
     max-width: 65%;
     text-overflow: ellipsis;
@@ -450,8 +319,6 @@ header h1 {
 
 .lista {
     display: grid;
-    gap: 20px;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     grid-template-columns: 1fr;
     gap: 16px;
 }
@@ -459,47 +326,29 @@ header h1 {
 .item {
     background: var(--bg-card);
     border-radius: 16px;
-    padding: 20px;
     padding: 14px;
     box-shadow: var(--item-shadow);
-    transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.item:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--item-hover-shadow);
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
 /* Enquadramento limpo da foto com fundo branco padrão de e-commerce */
 .item-imagem {
     width: 100%;
-    max-height: 220px;
     height: 200px;
     object-fit: contain;
     background: var(--img-card-bg);
     border-radius: 12px;
-    margin-bottom: 16px;
-    background: var(--img-bg);
-    transition: transform 0.3s ease;
     padding: 8px;
     margin-bottom: 12px;
     transition: transform 0.25s ease;
 }
 
-.item:hover .item-imagem {
-    transform: scale(1.02);
-}
-
 .item-descricao {
     color: var(--text-secondary);
-    line-height: 1.6;
-    margin-bottom: 16px;
-    font-size: 1.05rem;
     line-height: 1.45;
     font-size: 0.96rem;
     margin-bottom: 14px;
@@ -510,21 +359,14 @@ header h1 {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    align-items: center;
     gap: 8px;
     flex-wrap: wrap;
-    gap: 16px;
     margin-top: auto;
     padding-top: 4px;
 }
 
 .item-preco {
     background: var(--price-bg);
-    color: white;
-    padding: 10px 20px;
-    border-radius: 25px;
-    font-weight: 600;
-    font-size: 1.15rem;
     color: #ffffff;
     padding: 7px 14px;
     border-radius: 20px;
@@ -536,47 +378,28 @@ header h1 {
 .item-link {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
     gap: 6px;
     background: var(--link-bg);
-    color: white;
     color: #ffffff;
     text-decoration: none;
-    padding: 12px 28px;
     padding: 9px 18px;
     border-radius: 10px;
-    font-weight: 500;
-    font-size: 0.95rem;
-    transition:
-        opacity 0.3s ease,
-        transform 0.3s ease;
     font-weight: 600;
     font-size: 0.88rem;
     white-space: nowrap;
-    transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.item-link:hover,
-.item-link:focus-visible {
-    opacity: var(--link-hover-opacity);
-    transform: translateX(3px);
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
 }
 
 .item-link:focus-visible {
     outline: 3px solid var(--link-focus-outline);
-    outline-offset: 3px;
     outline-offset: 2px;
 }
 
 .item-link::after {
     content: "→";
-    transition: transform 0.3s ease;
     transition: transform 0.2s ease;
-}
-
-.item-link:hover::after {
-    transform: translateX(5px);
 }
 
 /* ==========================================================================
@@ -586,8 +409,6 @@ header h1 {
 .error {
     text-align: center;
     color: var(--header-text);
-    font-size: 1.2rem;
-    padding: 40px;
     font-size: 1.05rem;
     padding: 30px 16px;
 }
@@ -596,32 +417,25 @@ header h1 {
     background: var(--error-bg);
     border-radius: 12px;
     backdrop-filter: blur(10px);
-    margin-bottom: 24px;
     margin-bottom: 20px;
 }
 
 footer {
     text-align: center;
     color: var(--header-text);
-    margin-top: 40px;
     margin-top: 36px;
     font-size: 0.9rem;
     opacity: var(--footer-opacity);
 }
 
-/* Responsivo */
-@media (max-width: 600px) {
 /* ==========================================================================
    PROGRESSIVE ENHANCEMENT - TELAS MÉDIAS (TABLETS / A PARTIR DE 640px)
    ========================================================================== */
 @media (min-width: 640px) {
     body {
-        padding: 16px;
         padding: 20px 24px 36px;
     }
 
-    header h1 {
-        font-size: 1.8rem;
     .header {
         margin-bottom: 28px;
     }
@@ -631,12 +445,9 @@ footer {
     }
 
     .subtitle {
-        font-size: 1rem;
         font-size: 1.08rem;
     }
 
-    .planilha-titulo {
-        font-size: 1.5rem;
     .tabs-header {
         max-width: 520px;
         margin: 0 auto;
@@ -664,30 +475,20 @@ footer {
     }
 
     .lista {
-        grid-template-columns: 1fr;
         grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
         gap: 20px;
     }
 
-    .tab-button {
-        padding: 10px 18px;
-        font-size: 0.9rem;
-        white-space: normal;
     .item {
         padding: 18px;
     }
 
-    .item-footer {
-        flex-direction: column;
-        align-items: flex-start;
     .item-imagem {
         height: 210px;
         padding: 12px;
     }
 }
 
-    .item-preco {
-        align-self: flex-start;
 /* ==========================================================================
    PROGRESSIVE ENHANCEMENT - TELAS GRANDES (DESKTOP / A PARTIR DE 1024px)
    ========================================================================== */
@@ -696,19 +497,10 @@ footer {
         padding: 32px 24px 48px;
     }
 
-    .theme-toggle {
-        width: 40px;
-        height: 40px;
-        top: 10px;
-        right: 10px;
-        transform: none;
     .header {
         margin-bottom: 36px;
     }
 
-    .theme-toggle:hover,
-    .theme-toggle:focus-visible {
-        transform: scale(1.1);
     /* No desktop amplo, o botão de tema volta a ficar no canto superior direito */
     .header-top {
         position: absolute;
@@ -717,25 +509,15 @@ footer {
         margin-bottom: 0;
     }
 
-    .controles-container {
-        justify-content: stretch;
-        margin-bottom: 20px;
     .header-title {
         font-size: 2.5rem;
         margin-bottom: 8px;
     }
 
-    .sort-wrapper {
-        width: 100%;
-        justify-content: space-between;
-        padding: 8px 14px;
     .theme-toggle:hover {
         transform: scale(1.08);
     }
 
-    .sort-select {
-        max-width: 65%;
-        text-overflow: ellipsis;
     .tab-button:hover:not(.active) {
         background: var(--tab-hover-bg);
     }
