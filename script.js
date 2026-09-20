@@ -231,6 +231,7 @@ function renderizarConteudoAba(index) {
             aria-labelledby="tab-${index}"
         >
             <h2 class="planilha-titulo">${escapeHtml(planilha.nome)}</h2>
+            ${planilhasCarregadas.length > 1 ? "" : `<h2 class="planilha-titulo">${escapeHtml(planilha.nome)}</h2>`}
             <div class="lista">
                 ${itensOrdenados
                     .map((item) => {
